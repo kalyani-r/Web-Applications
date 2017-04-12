@@ -1,0 +1,143 @@
+<html>
+<head>
+  <style type = "text/css">
+   
+  p { font-family: helvetica;
+    color: ;}
+    body { background-color: lightyellow}
+    .heading
+			{   text-align: center;
+				color: #000099;
+				text-shadow: -4px 4px dimgrey;   }
+    </style>
+    <script>
+  $(function() {
+  $( "tooltip" ).tooltip();
+  });
+  </script>  
+</head>
+<body>
+<form method = "post" autocomplete = "on" action="" >
+<table>
+<h1 class = "heading">CS Department Survey Page</h1>
+<tbody>
+<tr>
+<p> RACHAKONDA </p>
+<p> <td><label> First Name:</td> 
+    <td><input name = "name" type = "text" size = "25" placeholder = "First name" autofocus/></td>
+    </label> </p>
+</tr>
+<tr>
+<p> <td><label> Last Name:</td> 
+    <td><input name = "name" type = "text" size = "25" placeholder = "Last name" autofocus/></td>
+    </label> </p>
+</tr>
+<tr>    
+<p> <td><label> Street Address:</td>  
+    <td><input name = "street address" type = "text" size = "25" placeholder = "Street address"/></td>
+    </label> </p>
+ </tr>
+<tr>  
+<p><td><label> City: </td> 
+    <td> <input name = "city" type = "text" size = "25" placeholder = "City"/></td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> State: </td> 
+     <td>  <input name = "state" type = "text" size = "25" placeholder = "State"/></td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> Zip: </td> 
+     <td>  <input name = "zip" type = "number" min = "5"/></td>
+    </label> </p>
+     </tr>
+ <tr>   
+<p> <td><lable> Telephone number: </td>
+     <td>  <input name = "telnum" type = "tel" placeholder = "(999)999-999"/></td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> E-mail: </td>
+      <td> <input name = "email" type = "email" placeholder = "name@domain.com" /></td>
+    </label> </p>
+     </tr>
+<tr>       
+<p> <td><label> URL: </td> 
+      <td> <input name="url" type="url" placeholder = "www.domainname.com"/></td>
+    </label> </p>
+     </tr>
+<tr>
+<p> <td><label> Date of survey: </td> 
+     <td>  <input name="date" type="datetime-local" size="25"/></td>
+    </label> </p>
+     </tr>
+<tr>
+<p> <td>
+   <strong> What did you like the most about the campus? </strong> <br/>
+   
+   <label> Students
+      <input name = "thingsliked" type = "checkbox" value = "Students" checked/> </label>
+   <label> Location
+      <input name = "thingsliked" type = "checkbox" value = "Location" /> </label>
+   <label> Campus
+      <input name = "thingsliked" type = "checkbox" value = "Campus" /> </label>
+   <label> Atmosphere
+      <input name = "thingsliked" type = "checkbox" value = "Atmosphere" /> </label>   
+   <label> Dorm rooms
+      <input name = "thingsliked" type = "checkbox" value = "Dorm" /> </label>   
+   <label> Sports
+      <input name = "thingsliked" type = "checkbox" value = "Sports" /> </label>
+ </td></tr></p>
+<tr>
+<p> <td>
+    <strong> How did you become interested in the university </strong> </br>
+    
+    <label> Friends
+       <input name = "interest" type = "radio" value = "Friends" checked = "checked" /> </label>
+    <label> Television
+       <input name = "interest" type = "radio" value = "Tv"/> </label>          
+    <label> Internet
+       <input name = "interest" type = "radio" value = "Internet"/> </label>   
+    <label> Other
+       <input name = "interest" type = "radio" value = "Other"/> </label>    
+ </td></tr></p>
+
+  
+<p><td>
+   <label> Likelihood of recommending this school: 
+     <select name = "likelihood"
+        <option selected = "selected"></option>
+        <option>Very Likely</option>
+        <option>Likely</option>
+        <option>Unlikely</option>
+     </select>   
+   </label>
+</td></p> 
+
+<tr><p>   
+<td><label>Raffle:
+ <input type = "text" id = "raffle" style = "width:250px;"/>( Please enter atleast 10 comma separated numbers ranging from 1-100)	
+ </label></td>
+ </p></tr>
+<tr>
+<p><td><label> Comments: </br>
+    <td><textarea name = "comments" 
+    rows = "4" cols = "36" placeholder = "Enter comments here">  </textarea></td>
+    </label> </p>  </tr>  
+<tr> 
+<p> 
+  <td><input type = "submit" value = "Submit"/>
+  <input type = "reset" value = "Cancel" /></td>
+</p>
+
+</tr>
+</tbody>
+</table>
+</form>
+<div id="tooltip"
+    <a href = "https://www2.gmu.edu/">
+    <img src="logo.png" height = "100px" width = "200px" alt = "Goerge Mason Logo" align="right" title="Please visit http://www.gmu.edu for more information." /> 
+    </div>
+ </body>                         
+</html>

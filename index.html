@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title> SWE 642 HOMEWORK 1 </title>
+  <link rel = "stylesheet" type = "text/css" href = "http://mason.gmu.edu/~krachako/testaccess/jquery-ui.css" />
+      <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
+      <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script>
+  $(function() {
+            $( "#tabs" ).tabs({
+		collapsible : "true",
+		hide : "slideUp",
+		beforeLoad: function( event, ui ) {
+        		ui.jqXHR.fail(function() {
+          		ui.panel.html("Couldn't load this tab. Sorry!! ");
+        			});
+			}
+		});
+         });
+      </script>
+</head>
+ 
+<body>
+   <h1> <center>  SWE 642 HOMEWORK </center></h1> </p>
+      <div id="tabs">
+         <ul>
+            <li><a href="http://mason.gmu.edu/~krachako/testaccess/home.html">HOMEPAGE</a></li>
+            <li><a href="http://mason.gmu.edu/~krachako/testaccess/info.html">CS DEPARTMENT</a></li>
+            <li><a href="#link"> SURVEY PAGE</a></li>        
+         </ul>
+         <div id="link">
+       <iframe src="survey.html" height="1000px" width="100%"> <iframe/> 
+	  </div>
+      </div>
+       
+
+</body>
+</html>

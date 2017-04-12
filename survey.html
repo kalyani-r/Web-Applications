@@ -1,0 +1,373 @@
+<html>
+<head>
+  <style type = "text/css">
+   
+  p { font-family: helvetica;
+    color: ;}
+    body { background-color: lightyellow}
+    .heading
+			{   text-align: center;
+				color: #000099;
+				text-shadow: -4px 4px dimgrey;   }
+    </style>
+    <script type = "text/javascript">
+ var now = new Date(); 
+ var hour = now.getHours(); 
+ var name;
+ if ( hour < 12 ) 
+ document.write( "<h1>Good Morning " );
+ else
+ {
+ hour = hour - 12; 
+ if ( hour < 6 )
+ document.write( "<h1>Good Afternoon " );
+else
+ document.write( "<h1>Good Evening " );
+} 
+if ( document.cookie )
+				{
+					var myCookie = unescape (document.cookie);
+					var cookieTokens = myCookie.split( "=" );
+					name = cookieTokens[1];
+				}
+else
+				{
+					name = window.prompt ( "Please enter your name", "Kalyani") ;
+					document.cookie = " name =" + escape(name);
+				}
+document.writeln ( name + ", Welcome to Assignment #3 </center></H3>" ) ;
+document.writeln ( "<center>Click <a href = 'javascript:wrongPerson()'>here</a> if you are not " + name + "</center>" ) ;
+function wrongPerson()
+{
+	document.cookie = "name = null;"
+	location.reload();
+}
+				function formValidation()
+				{
+					var error="";
+					var bool=true;
+					var name= document.getElementById( "name" ).value;
+					var lettersonly=  /^[a-zA-Z\s]*$/; 
+					if(name=="")
+					{
+						error+="Name can't be empty. Please enter the name.\n";
+						document.getElementById( "name" ).value = "";
+						document.getElementById( "name" ).focus();
+						bool=false;
+					}
+					
+					else if(!name.match(lettersonly)) 
+					{
+						error+="Username should contain only letters and spaces.\n" ;
+						document.getElementById( "name" ).value = "";
+						document.getElementById( "name" ).focus();
+						bool=false;
+					}
+					var a_no = document.getElementById( "street_address" ).value;
+					var alphanumeric = /^[0-9a-zA-Z\s]+$/;
+					if(a_no=="")
+					{
+						error+="Street address can't be empty. Please enter the Street address.\n";
+						document.getElementById( "street_address" ).value = "";
+						document.getElementById( "street_address" ).focus();
+						bool=false;
+					}
+					else if(!a_no.match(alphanumeric)) 
+					{
+						error+="Street address can have only alpha numerics.\n";
+						document.getElementById( "street_address" ).value = "";
+						document.getElementById( "street_address" ).focus();
+						bool=false;
+					}
+					var email= document.getElementById( "email" ).value;
+					if(email=="")
+					{
+						error+="email can't be empty. Please enter the email.\n";
+						document.getElementById( "email" ).value = "";
+						document.getElementById( "email" ).focus();
+						bool=false;
+					}
+					var checkbox = document.forms["details"]["thingsliked"];
+					var lencheck=0;
+					for(var i=0;i<checkbox.length;i++)
+					{
+						if(checkbox[i].checked)
+							lencheck++;
+					}
+					if(lencheck<2)
+					{	
+						error+="Select atleast 2 things you liked on campus.\n";
+						
+						bool=false;
+
+					}
+					var radiointerest=document.forms["details"]["interest"];
+					var lenradio=0;
+					for(var i=0;i<radiointerest.length;i++){
+						if(radiointerest[i].checked)
+							lenradio++;
+					}
+					if(lenradio<1)
+					{	
+						error+="Select atleast 1 interests.\n";
+						bool=false;
+					}
+					if(bool)
+					 return true;
+					else
+					{
+					alert(error);
+					return false;
+					}
+				
+				}
+		function calmaxavg()
+		{
+			var data= document.getElementById( "data" ).value;
+					var splitdata=data.split(",");
+					if(splitdata.length<10)
+					{
+						alert("enter atleast 10 numbers");
+						data.focus();
+						return false;
+					}
+					max=0;
+					sum=0;
+					
+					for(var i=0;i<splitdata.length;i++)
+					{	
+						num=parseInt(splitdata[i])
+						
+						if(num<1 || num>100)
+						{
+							alert("Enter values from 1-100 only");
+							data.focus();
+							return false;
+						}
+						else
+						{
+							
+							
+							if(max<num)
+								max=num;
+							sum+=num;
+													
+						}
+					}
+					len1=parseInt(splitdata.length);
+					avg=sum/len1;
+					document.getElementById("max").value=max;
+					document.getElementById("avg").value=avg;
+					return true;
+		}
+		function zipFinder()
+		{
+				var zip1 = document.getElementById( "zip" ).value;
+				var requestUrl ="http://mason.gmu.edu/~krachako/testaccess/zip.json";
+				var asyncRequest = new XMLHttpRequest();
+						var asreq;
+						//alert("declare");
+						asreq= new XMLHttpRequest();
+							
+						asreq.onreadystatechange= function()
+						{
+							if ( asreq.readyState == 4 && asreq.status == 200 )
+							{
+								var data = JSON.parse(asreq.responseText);
+						
+								var n_data = data.zipcodes.length;
+								var flag = 0;
+								for ( var i = 0 ; i < n_data ; i++ )
+								{
+									if ( data.zipcodes[i].zip == zip1 )
+									{
+										flag = 1 ;
+										//alert("flag to 1");
+										break;
+									}
+								}
+			     				if ( flag == 0 )
+								{
+									alert("Invalid zip code");
+									//document.getElementById( "populate_citystate" ).innerHTML = "Invalid zip code";
+									document.getElementById( "zip" ).value = " ";
+									document.getElementById( "city" ).value = " ";
+									document.getElementById( "state" ).value = " ";
+								}
+								else
+								{
+									document.getElementById( "city" ).value = data.zipcodes[i].city;
+									document.getElementById( "state" ).value = data.zipcodes[i].state;
+								
+								}
+									
+							}
+							
+							
+						}
+						asreq.open("GET","http://mason.gmu.edu/~krachako/testaccess/zip.json", true);
+						asreq.send();
+					
+				}
+				
+  $(function() {
+  $( "tooltip" ).tooltip();
+  });	
+			
+</script>	
+</head>
+<body>
+<form method = "post" name="details">
+<table>
+<h1 class = "heading">CS Department Survey Page</h1>
+<tbody>
+<tr>
+<p> RACHAKONDA </p>
+<p> <td><label> User Name:</td> 
+    <td><input id = "name"  type = "text" size = "25" placeholder = "User_name" autofocus/></td>
+    </label> </p>
+</tr>
+
+ <tr>    
+<p> <td><label> Street Address:</td>  
+    <td><input id = "street_address" type = "text" size = "25" placeholder = "Street address"/></td>
+    </label> </p>
+ </tr>
+ 
+<tr>  
+<p><td><label> City: </td> 
+<td> <input id = "city" name = "city" type = "text" size = "25" placeholder = "City"/></td>
+    <td> <span id = "city"> </span> </td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> State: </td> 
+     <td> <input id = "state" name = "state" type = "text" size = "25" placeholder = "State"/></td>
+     <td>  <span id = "state"> </span></td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> Zip: </td> 
+     <td>  <input id = "zip" name="zip" type = "text" onblur = "zipFinder()"/> </td>
+     <span id="populate_citystate" />
+    </label> </p>
+     </tr>
+ <tr>   
+<p> <td><lable> Telephone number: </td>
+     <td>  <input id = "telnum" type = "tel" placeholder = "(999)999-999"/></td>
+    </label> </p>
+     </tr>
+<tr>    
+<p> <td><label> E-mail: </td>
+      <td> <input id = "email" type = "email" placeholder = "name@domain.com" /></td>
+    </label> </p>
+     </tr>
+<tr>       
+<p> <td><label> URL: </td> 
+      <td> <input id ="url" type="url" placeholder = "www.domainname.com"/></td>
+    </label> </p>
+     </tr>
+<tr>
+<p> <td><label> Date of survey: </td> 
+     <td>  <input id ="date" type="datetime-local" size="25"/></td>
+    </label> </p>
+     </tr>
+<tr>
+<p> <td>
+   <strong> What did you like the most about the campus? </strong> <br/>
+   
+   <label> Students
+      <input id = "thingsliked" type = "checkbox" value = "Students" checked/> </label>
+   <label> Location
+      <input id= "thingsliked" type = "checkbox" value = "Location" /> </label>
+   <label> Campus
+      <input id = "thingsliked" type = "checkbox" value = "Campus" /> </label>
+   <label> Atmosphere
+      <input id = "thingsliked" type = "checkbox" value = "Atmosphere" /> </label>   
+   <label> Dorm rooms
+      <input id = "thingsliked" type = "checkbox" value = "Dorm" /> </label>   
+   <label> Sports
+      <input id = "thingsliked" type = "checkbox" value = "Sports" /> </label>
+ </td></tr></p>
+<tr>
+<p> <td>
+    <strong> How did you become interested in the university </strong> </br>
+    
+    <label> Friends
+       <input name = "interest" type = "radio" value = "Friends"  /> </label>
+    <label> Television
+       <input name = "interest" type = "radio" value = "Tv"/> </label>          
+    <label> Internet
+       <input name = "interest" type = "radio" value = "Internet"/> </label>   
+    <label> Other
+       <input name = "interest" type = "radio" value = "Other"/> </label>    
+ </td></tr></p>
+<tr>
+<p><td><label> Comments: </br>
+    <td><textarea name = "comments" 
+    rows = "4" cols = "36" placeholder = "Enter comments here">  </textarea></td>
+    </label> </p>  </tr>
+<tr>
+<p><td>
+<label for= "txtList"> High School Graduation:
+   <input type = "text" id="txtlist" 
+       placeholder = "Select a month" list = "months"/>
+   <datalist id = "months">
+       <option value = "January">
+       <option value = "February">   
+       <option value = "March"> 
+       <option value = "April">
+       <option value = "May">
+       <option value = "June">
+       <option value = "July">
+       <option value = "August">
+       <option value = "September">
+       <option value = "October">
+       <option value = "Novemeber">
+       <option value = "December">
+   </datalist> 
+   </label>  </td>
+  <td> <label> Year
+    <input name = "year" type = "number" max = "4"/>
+    </label>  
+  </td> </p>   
+  <tr>    
+<p><td>
+   <label> Likelihood of recommending this school: 
+     <select name = "likelihood"
+        <option selected = "selected"></option>
+        <option>Very Likely</option>
+        <option>Likely</option>
+        <option>Unlikely</option>
+     </select>   
+   </label>
+</td></p>
+<tr><p>   
+<td><label>Data: <input type = "text" id = "data" style = "width:250px;"  onblur='return calmaxavg()' />( Please enter atleast 10 comma separated numbers ranging from 1-100)	</label></td></p></tr>
+
+
+<table border = "0" cellpadding = "5px" cellspacing = "1px" col width = "300px">
+<tr>
+	<td> Average: </td>
+	<td> <input type = "text" id = "avg" maxlength = "10" style = "width:50px;" </td>
+	<td> Maximum: </td>
+	<td>  <input type = "text" id = "max" maxlength = "10" style = "width:50px;" </td>
+</tr> </table>  
+
+
+
+<tr> 
+<p> 
+  <td><input type = "submit" value = "Submit" onclick="return formValidation()"/>
+  <input type = "reset" value = "Reset" /></td>
+</p>
+</tr>
+</tbody>
+</table>
+</form>
+<div id="tooltip"
+    <a href = "https://www2.gmu.edu/">
+    <img src="logo.png" height = "100px" width = "200px" alt = "Goerge Mason Logo" align="right" title="Please visit http://www.gmu.edu for more information." /> 
+</div>
+ </body>                         
+</html>
