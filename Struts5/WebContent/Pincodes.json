@@ -1,0 +1,24 @@
+{
+"pincodes":[
+{
+"pincode": "22312",
+"city": "Alexandria",
+"state":"VA"
+},
+{
+"pincode": "22030",
+"city": "Fairfax",
+"state":"VA"
+},
+{
+"pincode": "22301",
+"city": "Tysons Corner",
+"state":"MD"
+},
+{
+"pincode": "20148",
+"city": "Ashburn",
+"state":"VA"
+}
+]
+}

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<!-- <link rel="stylesheet" type="text/css" href="./css/jquery-ui/jquery-ui.css" />
+<script src="./scripts/jquery.js" type="text/javascript"></script>
+<script src="./scripts/jquery-ui.js" type="text/javascript"></script>
+ -->
+ 
+  <style type = "text/css">
+   
+  p { font-family: helvetica;
+    color: ;}
+    body { background-color: lightyellow}
+    .heading
+			{   text-align: center;
+				color: #000099;
+				text-shadow: -4px 4px dimgrey;   }
+    </style>
+    
+<script type="text/javascript">
+function DataEval()
+{
+	var inputstr = document.getElementById("data").value;
+	var numbers = inputstr.split(",");
+	var sum = 0;
+	var max= 0
+
+	if(numbers.length < 10)
+	{
+		alert("Enter atleast 10 numbers");
+	}
+	else
+	{
+		for(var i = 0; i < numbers.length; i++)
+		{	
+			
+			var current = parseFloat(numbers[i]);
+			if(current<1 || current>100)
+			{
+				sum=0;
+				current=0;
+				alert("enter values between 1 and 100")
+				break;
+			}
+			if(max<=current)
+				max=current;
+			sum = sum + current;
+		}
+		average = sum/(numbers.length);
+		document.getElementById("average").value=average;
+		document.getElementById("maximum").value=max;
+		
+	}
+}
+
+function FormValidation(){   
+	
+	document.getElementById("formValidations").innerHTML = "";
+	var fname = document.getElementById("fname");
+	var lname = document.getElementById("lname");  
+    var errors = []; //array to store errors
+    var flag = 0; //flag value 
+    var studentid = document.getElementById("studentid").value;
+    if(studentid == ""){
+    	errors.push("Please enter your student ID");
+    }
+    if(!fname.value.match(/^[A-Za-z ]+$/)){   
+        errors.push("Please enter a valid First Name");		
+        document.getElementById("fname").value = "";
+    }
+    if(!lname.value.match(/^[A-Za-z ]+$/)){   
+	        errors.push("Please enter a valid Last Name");	
+	        document.getElementById("lname").value = "";
+	    }
+    if(!document.getElementById('address').value.match( /^[A-Za-z0-9 ]+$/)){
+    errors.push("Please enter a valid address");
+    	document.getElementById("address").value = "";
+    }
+    var x = document.getElementsByName('options');
+	var flag = 0;
+	for(var i=0; i<x.length; i++){
+		if(x[i].checked)
+			flag=flag+1;
+	}
+	if(flag< 2){
+		errors.push("Please select atleast 2 checkboxes");
+	}
+    var radios = document.getElementsByName("options");
+    flag = false; 
+
+    var i = 0;
+    while (!flag && i < radios.length) {
+        if (radios[i].checked) 
+        	flag = true;
+        i++;        
+    }
+
+    if (!flag) {
+    	errors.push("Please select atleast one radio button");
+    }
+    	
+	var email = document.getElementById("email").value;
+	if(!email.match(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i)){
+		errors.push("Please enter a valid email address");
+		document.getElementById("email").value = "";
+	}
+	var math = document.getElementById("data1").value;
+	if(!math){
+		errors.push("please enter 10 numbers in data");
+	}
+	var f=0;
+	if(math.split(",").length == 10){
+		var y = math.split(",");
+		for(var i=0; i<10; i++){
+			if(y[i] >100){
+				f = 1;
+			}
+		}
+	}
+	else{
+		errors.push("Please enter 10 numbers");
+	}
+	if(f==1){
+		errors.push("Please enter numbers less than or equal to 100");
+	}
+    var errorsAlert = "";
+    if(errors.length > 0){
+    	for(var i=0; i<errors.length; i++){
+    		errorsAlert = errorsAlert + errors[i] + "<br />"; 
+    	}
+    	document.getElementById("formValidations").innerHTML = errorsAlert;
+    }
+    var y = document.getElementById("formValidations").innerHTML;
+    if(y == ""){
+    	document.getElementById("formValidations").innerHTML = "";
+    	document.getElementById("form4").action = "/642HomeWork4/FormAction";
+    	document.getElementById("form4").method = "post";
+    	document.getElementById("form4").submit();
+    }
+    else{
+    	$("#formValidations").dialog({
+			width:400,
+			height:400,
+			buttons: [
+			  		{
+			  			text: "Ok",
+			  			click: function() {
+			  				$( this ).dialog( "close" );
+			  			}
+			  		},
+			  		{
+			  			text: "Cancel",
+			  			click: function() {
+			  				$( this ).dialog( "close" );
+			  			}
+			  		}
+			  	]	
+		});
+    }
+}
+
+function pincodeData()
+{
+	var xmlhttp;
+	var pincodes1= document.getElementById("pincode").value;
+	
+	if (window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{		
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			var jc=JSON.parse(xmlhttp.responseText);
+			var flag=0;
+			for(var i=0; i<jc.pincodes.length; i++)
+			{
+				if(jc.pincodes[i].pincode == pincodes1)
+				{
+					flag=1;
+					break;
+				}
+			}
+			if(flag==1)
+			{
+				document.getElementById("city").value=jc.pincodes[i].city; 
+				document.getElementById("state").value=jc.pincodes[i].state;
+			}
+			else
+			{
+				alert("Invalid Pincode");
+				document.getElementById("pincode").value="";
+				document.getElementById("pincode").focus();
+				document.getElementById("errorPincode").value = "Invalid pincode, please choose a pincode among 22030, 22312, 22301, 20148"; 
+				document.getElementById("city").value = "";
+				document.getElementById("state").value = "";
+			}
+		}
+	}
+	xmlhttp.open( "GET",Url, true );
+	//xmlhttp.setRequestHeader("Accept","application/json; charset=utf-8" );
+	xmlhttp.send();
+}
+
+</script>
+
+</head>
+<body>
+<h1 align='center'>Survey Form:</h1>
+<form id="survey" autocomplete="on" action="survey" method="POST">
+				<table width=100%>
+			        <tr>
+			            <td>
+			            	<label>First Name:<span class="red">*</span></label><br />
+							<input type="text" name="fname" id="fname" autofocus required placeholder="First Name"> 
+			            </td>
+			       
+			            <td>
+			            	<label>Last Name:<span class="red">*</span></label><br />
+							<input type="text" name="lname" id="lname" placeholder="Last Name" required> 
+			            </td>
+			         	<td>
+			            	<label>Student ID:</label><span class="red">*</span><br>
+							<input type="text" id="studentid" name="studentid" required="required" >
+			            </td>
+			         		
+			        </tr>
+			  		<tr>
+			  			<td>
+			            	<label>Email:<span class="red">*</span></label><br />
+							<input type="email" id="email" name="email" placeholder="xyz@domain.com" required> 
+			            </td>
+			  			<td>
+				        	<label>URL:</label><br />
+							<input type="text" name="url" autocomplete="on" placeholder="" value="" required/>
+				        </td>
+			            <td>
+			            	<label>Username:</label><br/>
+			            	<input type="text" name="username" autocomplete="on" value="" placeholder="username"required/>
+			            </td>
+			            </tr>
+			  		
+			  		<tr>
+			  			<td>
+			            	<label>Phone Number:</label> <br>
+							<input type="text" value="" name="phoneno" placeholder="(XXX)-XXX-XXXX"> 
+			            </td>
+			  		
+			  			<td>
+			            	<label>Street Address:<span class="red">*</span></label><br />
+							<input type="text" name="address" id="address" placeholder="address" required/> 
+			            </td>
+			            <td>
+			            	<label>City:<span class="red">*</span></label><br />
+			            	<input type="text" name="city" id="city" />
+					    </td>
+			         	
+			            
+			           
+			        </tr>
+			  		<tr>
+			  			<td>
+			            	<label>State:<span class="red">*</span></label><br />
+			            	<input type="text" name="state" id="state" /> 
+						</td>
+			  			 <td>
+			            	<label>Pincode:<span class="red">*</span></label><br />
+							<input type="text" id="pincode" name="pincode" placeholder="22030" onblur="pincodeData();" required>
+							<span id="errorPincode" class="red"></span>
+			                
+			            </td>
+						
+			  			<td>
+			            	<label>Date:<span class="red">*</span></label><br />
+							<input type="date" name="date" id="gDate" required> 
+			            </td> 
+			            
+			           
+					</tr>
+					<tr>
+			             <td>
+			        		<label>High-School Graduation Date:<span class="red">*</span></label><br />
+			        		<table>
+			        			<tr>
+			        				<td>
+			        					<input list="Months" name="month" placeholder="Month" required>
+										<datalist id="month">
+											<option value="January">
+											<option value="February">
+											<option value="March">
+											<option value="April">
+											<option value="May">
+											<option value="June">
+											<option value="July">
+											<option value="August">
+											<option value="September">
+											<option value="October">
+											<option value="November">
+											<option value="December">
+										</datalist>
+			        				</td>
+			        				<td>
+			        					<input type="text" name="year" placeholder="YYYY" pattern="^\d{4}(?:[-\s]\d{3})?$" required>
+			        				</td>
+								</tr>
+								</table>	
+						</td>
+			            <td>
+			            	<label>How are you interested in the university:<span class="red">*</span></label><br>
+			            	<table>
+			                    <tr>
+			                        <td>
+			                            <input id="interested" type="radio" name="option" value="Friends" required>Friends
+			                        </td>
+			                        <td>
+			                            <input id="interested" type="radio" name="option" value="Telivison">Television
+			                        </td>                        
+			                      	<td>
+			                        	<input id="interested" type="radio" name="option" value="Internet">Internet
+			                        </td>
+			                        <td>
+			                        	<input id="interested" type="radio" name="option" value="Other">Other
+			                        </td>
+			                    </tr>
+			                </table>
+			            </td>
+			        
+			       		<td>
+			            	<label>Would you recommend this university to your friends?<span class="red">*</span></label><br />
+			            	<select name="likeness" id="likeness">
+								<option value="vlikely" selected>Very Likely</option>
+								<option value="likely">Likely</option>
+								<option value="unlikely">Unlikely</option>
+							</select> 
+			            </td>
+			            
+			           
+						
+			        	
+			        </tr>
+			    	<tr>
+						 <td>
+			            <label>What do you like most about the campus?<span class="red">*</span></label>
+			             <table>
+			                    <tr>
+			                        <td>
+			                            <input id="campus" type="checkbox" name="options" value="students">Students
+			                        </td>
+			                        <td>
+			                            <input id="campus" type="checkbox" name="options" value="location">Location
+			                        </td>
+			                        <td>
+			                        	<input id="campus" type="checkbox" name="options" value="campus">Campus
+			                        </td>
+			                    </tr>
+			                     <tr>
+			                        <td>
+			                            <input id="campus"  type="checkbox" name="options" value="atmosphere">atmosphere
+			                        </td>
+			                        <td>
+			                            <input id="campus" type="checkbox" name="options" value="dorm">Dorm Rooms
+			                        </td>
+			                        <td>
+			                        	<input id="campus" type="checkbox" name="options" value="sports">Sports
+			                        </td>
+			                    </tr>
+			                </table>
+			            </td>
+						<td>
+			            	<label>Additional Comments:</label><br />
+			            	<textarea rows="4" cols="50" name="comments" placeholder="Please enter your comments here.."></textarea>
+			            </td>
+			            <td>
+			        	    	<label>Data</label>
+								<input type="text" name="data" id="data1">	                
+			            </td>
+					</tr>
+			
+			        <tr>
+			            <td align="center" colspan="3">
+				            <input type="submit" id="submit" value="Submit" onclick="FormValidation();"/>
+			
+							<div id="formValidations" title="Please fix following errors" style="display:none">
+								<p id="alert"></p>
+							</div>
+			            		            	
+			                <input type="reset" value="reset" onclick="resetForm();">
+			            </td> 
+			        	
+			        </tr>
+				 <tr>
+            <td>
+                <h4> KALYANI RACHAKONDA</h4>
+            </td>
+        </tr>	
+				</table>	
+				</form>	
+			
+</body>
+</html>
