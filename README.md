@@ -4,7 +4,9 @@ The index.html has the tabs which open to homepage (home.html), CS department pa
 Website link : http://mason.gmu.edu/~krachako/testaccess/   Username: swe642  Password: kallu46
 
 #MVC
+
 Server side processing by Servlet and JDBC/JPA implementation.
 
 #Struts
+
 Implementing using Struts2 framework.
